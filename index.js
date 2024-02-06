@@ -19,6 +19,7 @@ clear.addEventListener("click", handleClear);
 
 function handleOperand(e) {
 	const value = e.target.textContent;
+	if (leftOperand.length > 11 || rightOperand.length > 11) return;
 	if (value === ".") {
 		if (!operator) {
 			if (leftOperand.includes(value)) return;
