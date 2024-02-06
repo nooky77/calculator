@@ -34,6 +34,14 @@ function handleOperand(e) {
 }
 
 function handleOperator(e) {
+	if (!result && !leftOperand) leftOperand = display.textContent;
+	if (e.target.textContent === "=") {
+		result = operate(+leftOperand, +rightOperand, operator);
+		display.textContent = result;
+		result = "";
+		resetVar();
+		return;
+	}
 	if (leftOperand && rightOperand && operator) {
 		result = operate(+leftOperand, +rightOperand, operator);
 		leftOperand = result;
@@ -45,15 +53,18 @@ function handleOperator(e) {
 }
 
 function handleClear() {
-	leftOperand = "";
-	rightOperand = "";
-	operator = "";
+	resetVar();
 	display.textContent = "0";
 }
 
 function displayText() {
 	if (!operator) display.textContent = leftOperand;
 	else display.textContent = rightOperand;
+}
+function resetVar() {
+	operator = "";
+	leftOperand = "";
+	rightOperand = "";
 }
 
 function operate(x, y = 0, operator) {
@@ -82,16 +93,4 @@ function multiply(x, y) {
 }
 function divide(x, y) {
 	return x / y;
-}
-
-function isValid(str) {
-	let test = str.split("");
-	let count = 0;
-	for (let char of test) {
-		if (char === ".") {
-			count += 1;
-			if (count > 1) return false;
-		}
-	}
-	return true;
 }
