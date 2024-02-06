@@ -37,6 +37,7 @@ function handleOperand(e) {
 function handleOperator(e) {
 	if (!result && !leftOperand) leftOperand = display.textContent;
 	if (e.target.textContent === "=") {
+		if (handleDivideByZero()) return;
 		result = operate(+leftOperand, +rightOperand, operator);
 		display.textContent = result;
 		result = "";
@@ -56,6 +57,15 @@ function handleOperator(e) {
 function handleClear() {
 	resetVar();
 	display.textContent = "0";
+}
+
+function handleDivideByZero() {
+	if (operator === "/" && rightOperand === "0") {
+		display.textContent = "Can't divide by 0";
+		resetVar();
+		return true;
+	}
+	return false;
 }
 
 function displayText() {
