@@ -15,7 +15,7 @@ h1 {
 }
 
 .container-calculator {
-	border: 2px solid black;
+	border: 4px solid white;
 	border-radius: 5px;
 }
 
@@ -56,10 +56,6 @@ h1 {
 
 .box-double-width {
 	width: 200px;
-}
-
-.box-triple-width {
-	width: 300px;
 }
 
 .orange {

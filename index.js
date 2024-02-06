@@ -1,5 +1,6 @@
 const numbers = document.querySelectorAll(".numbers");
 const operators = document.querySelectorAll(".operators");
+const undo = document.querySelector(".undo");
 const clear = document.querySelector(".clear");
 const display = document.querySelector(".display");
 let leftOperand = "";
@@ -14,6 +15,8 @@ numbers.forEach((number) => {
 operators.forEach((operator) => {
 	operator.addEventListener("click", (e) => handleOperator(e));
 });
+
+undo.addEventListener("click", handleUndo);
 
 clear.addEventListener("click", handleClear);
 
@@ -66,6 +69,16 @@ function handleDivideByZero() {
 		return true;
 	}
 	return false;
+}
+
+function handleUndo() {
+	if (!leftOperand && !rightOperand) return;
+	if (operator) {
+		rightOperand = rightOperand.slice(0, -1);
+	} else {
+		leftOperand = leftOperand.slice(0, -1);
+	}
+	displayText();
 }
 
 function displayText() {
