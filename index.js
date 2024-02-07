@@ -20,33 +20,6 @@ document.addEventListener("keydown", (e) => {
 	else return;
 });
 
-function isOperand(value) {
-	if (
-		value.charCodeAt() === 46 ||
-		(value.charCodeAt() > 47 && value.charCodeAt() < 58)
-	) {
-		return true;
-	}
-	return false;
-}
-
-function isOperator(value) {
-	if (
-		(value.charCodeAt() > 41 && value.charCodeAt() < 44) ||
-		value.charCodeAt() === 45 ||
-		value.charCodeAt() === 47 ||
-		value === "Enter"
-	) {
-		return true;
-	}
-	return false;
-}
-
-function isBackspace(value) {
-	if (value === "Backspace") return true;
-	return false;
-}
-
 operators.forEach((operator) => {
 	operator.addEventListener("click", (e) => handleOperator(e));
 });
@@ -131,6 +104,42 @@ function resetVar() {
 	rightOperand = "";
 }
 
+function isOperand(value) {
+	if (
+		value.charCodeAt() === 46 ||
+		(value.charCodeAt() > 47 && value.charCodeAt() < 58)
+	) {
+		return true;
+	}
+	return false;
+}
+
+function isOperator(value) {
+	if (
+		(value.charCodeAt() > 41 && value.charCodeAt() < 44) ||
+		value.charCodeAt() === 45 ||
+		value.charCodeAt() === 47 ||
+		value === "Enter"
+	) {
+		return true;
+	}
+	return false;
+}
+
+function isFloat(value) {
+	if (typeof value === "number") {
+		if (!Number.isNaN(value) && !Number.isInteger(value)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function isBackspace(value) {
+	if (value === "Backspace") return true;
+	return false;
+}
+
 function operate(x, y = 0, operator) {
 	switch (operator) {
 		case "+":
@@ -157,13 +166,4 @@ function multiply(x, y) {
 }
 function divide(x, y) {
 	return x / y;
-}
-
-function isFloat(value) {
-	if (typeof value === "number") {
-		if (!Number.isNaN(value) && !Number.isInteger(value)) {
-			return true;
-		}
-	}
-	return false;
 }
