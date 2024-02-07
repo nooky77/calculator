@@ -8,4 +8,4 @@ None
 
 ## Usage
 
-Live at: https://nooky77.github.io/Calculator
+Live at: https://nooky77.github.io/calculator
