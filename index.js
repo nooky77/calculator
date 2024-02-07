@@ -12,7 +12,34 @@ numbers.forEach((number) => {
 	number.addEventListener("click", (e) => handleOperand(e));
 });
 
-document.addEventListener("keypress", (e) => console.log(e.key));
+document.addEventListener("keypress", (e) => {
+	const value = e.key;
+	if (isOperator(value)) handleOperator(e);
+	else if (isOperand(value)) handleOperand(e);
+	else return;
+});
+
+function isOperand(value) {
+	if (
+		value.charCodeAt() === 46 ||
+		(value.charCodeAt() > 47 && value.charCodeAt() < 58)
+	) {
+		return true;
+	}
+	return false;
+}
+
+function isOperator(value) {
+	if (
+		(value.charCodeAt() > 41 && value.charCodeAt() < 44) ||
+		value.charCodeAt() === 45 ||
+		value.charCodeAt() === 47 ||
+		value === "Enter"
+	) {
+		return true;
+	}
+	return false;
+}
 
 operators.forEach((operator) => {
 	operator.addEventListener("click", (e) => handleOperator(e));
@@ -23,7 +50,9 @@ undo.addEventListener("click", handleUndo);
 clear.addEventListener("click", handleClear);
 
 function handleOperand(e) {
-	const value = e.target.textContent;
+	let value;
+	if (e.key) value = e.key;
+	else value = e.target.textContent;
 	if (leftOperand.length > 11 || rightOperand.length > 11) return;
 	if (value === ".") {
 		if (!operator) {
@@ -41,7 +70,7 @@ function handleOperand(e) {
 
 function handleOperator(e) {
 	if (!result && !leftOperand) leftOperand = display.textContent;
-	if (e.target.textContent === "=") {
+	if (e.target.textContent === "=" || e.key === "Enter") {
 		if (handleDivideByZero()) return;
 		result = operate(+leftOperand, +rightOperand, operator);
 		if (isFloat(result)) display.textContent = result.toFixed(2);
@@ -57,7 +86,8 @@ function handleOperator(e) {
 		operator = "";
 		displayText();
 	}
-	operator = e.target.textContent;
+	if (e.key) operator = e.key;
+	else operator = e.target.textContent;
 }
 
 function handleClear() {
