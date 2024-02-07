@@ -12,6 +12,8 @@ numbers.forEach((number) => {
 	number.addEventListener("click", (e) => handleOperand(e));
 });
 
+document.addEventListener("keypress", (e) => console.log(e.key));
+
 operators.forEach((operator) => {
 	operator.addEventListener("click", (e) => handleOperator(e));
 });
@@ -42,7 +44,8 @@ function handleOperator(e) {
 	if (e.target.textContent === "=") {
 		if (handleDivideByZero()) return;
 		result = operate(+leftOperand, +rightOperand, operator);
-		display.textContent = result;
+		if (isFloat(result)) display.textContent = result.toFixed(2);
+		else display.textContent = result;
 		result = "";
 		resetVar();
 		return;
@@ -117,4 +120,13 @@ function multiply(x, y) {
 }
 function divide(x, y) {
 	return x / y;
+}
+
+function isFloat(value) {
+	if (typeof value === "number") {
+		if (!Number.isNaN(value) && !Number.isInteger(value)) {
+			return true;
+		}
+	}
+	return false;
 }
