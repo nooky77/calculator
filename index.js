@@ -12,10 +12,11 @@ numbers.forEach((number) => {
 	number.addEventListener("click", (e) => handleOperand(e));
 });
 
-document.addEventListener("keypress", (e) => {
+document.addEventListener("keydown", (e) => {
 	const value = e.key;
 	if (isOperator(value)) handleOperator(e);
 	else if (isOperand(value)) handleOperand(e);
+	else if (isBackspace(value)) handleUndo();
 	else return;
 });
 
@@ -38,6 +39,11 @@ function isOperator(value) {
 	) {
 		return true;
 	}
+	return false;
+}
+
+function isBackspace(value) {
+	if (value === "Backspace") return true;
 	return false;
 }
 
@@ -71,6 +77,7 @@ function handleOperand(e) {
 function handleOperator(e) {
 	if (!result && !leftOperand) leftOperand = display.textContent;
 	if (e.target.textContent === "=" || e.key === "Enter") {
+		if (!leftOperand || !rightOperand) return;
 		if (handleDivideByZero()) return;
 		result = operate(+leftOperand, +rightOperand, operator);
 		if (isFloat(result)) display.textContent = result.toFixed(2);
