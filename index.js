@@ -13,6 +13,7 @@ numbers.forEach((number) => {
 });
 
 document.addEventListener("keydown", (e) => {
+	e.preventDefault();
 	const value = e.key;
 	if (isOperator(value)) handleOperator(e);
 	else if (isOperand(value)) handleOperand(e);
